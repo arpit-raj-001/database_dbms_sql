@@ -1,48 +1,40 @@
-AUTHORED BY : ARPIT RAJ , LNMIIT JAIPUR
-
-# Types of Databases
-
-> *Mongo DB, redis, cassandra wont be discussed here, It comes later in Phase 26 (NOSQL)*
-
-**different databases for applications have different requirements :-**
-• Structured data
-• fast caching
-• complex relation
-• time based measure
-• AI embeddings
-⟶ **hence different database models evolved**
-
-**DATABASES**
-`Relational` `document` `key value` `wide column` `graph` `time series` `vector`
+<div align="center">
+  <small><i>Authored by: Arpit Raj, LNMIIT Jaipur</i></small>
+  <h1>🗄️ Types of Databases</h1>
+  <h2>Chapter 10</h2>
+</div>
 
 ---
 
-### 1. Relational database
-*My SQL, postgre SQL, oracle database*
+> [!NOTE]
+> *Mongo DB, Redis, Cassandra won't be heavily discussed here. They come later in Phase 26 (NoSQL).*
 
-data is stored in tables, rows are called tuples columns are called attributes , relations are maintained using foreign keys
+Different applications have radically different requirements:
+- Structured data
+- Fast caching
+- Complex relations
+- Time-based measures
+- AI embeddings
 
-**FEATURES**
-• Structured schema
-• SQL support
-• ACID transactions
-• Joins
-• Normalization
-• Constraints
-
-**CHARACTERISTICS**
-first choice when data integrity is critical
-used in Banking, Ecomm, ERP, inventory, hospital systems etc
-
-**Cons:**
-less flexible schema, horizontal scaling challenging
+⟶ **Hence, different database models evolved.**
 
 ---
 
-### 2. Document Database
-*Mongo DB, couch DB*
+### 1️⃣ Relational Database
+*Examples: MySQL, PostgreSQL, Oracle Database*
 
-stores data as documents, JSON or BSON typically. each document can have a different structure
+Data is stored in tables. Rows are called tuples, columns are called attributes. Relations are maintained using foreign keys.
+
+- **FEATURES:** Structured schema, SQL support, ACID transactions, Joins, Normalization, Constraints.
+- **CHARACTERISTICS:** First choice when data integrity is critical. Used in Banking, E-commerce, ERP, inventory, hospital systems, etc.
+- ❌ **CONS:** Less flexible schema, horizontal scaling is challenging.
+
+---
+
+### 2️⃣ Document Database
+*Examples: MongoDB, CouchDB*
+
+Stores data as documents (typically JSON or BSON). Each document can have a different structure.
 
 ```json
 {
@@ -52,116 +44,107 @@ stores data as documents, JSON or BSON typically. each document can have a diffe
 }
 ```
 
-**CHARACTERISTIC :**
-• flexible schema
-• nested objects
-• JSON based
-• easy to evolve
-
-**BEST FOR**
-user profiles, blogging platforms, rapidly changing applications
-
-**Cons:**
-data duplication is common, complex joins are weaker than relational
+- **CHARACTERISTICS:** Flexible schema, nested objects, JSON-based, easy to evolve.
+- **BEST FOR:** User profiles, blogging platforms, rapidly changing applications.
+- ❌ **CONS:** Data duplication is common, complex joins are weaker than relational DBs.
 
 ---
 
-### 3. Key - Value database
-*Redis, Amazon dynamo DB*
+### 3️⃣ Key-Value Database
+*Examples: Redis, Amazon DynamoDB*
 
-a giant hash map, where we ask for key and we get its value.
-fast lookups, memory based, simple model
+A giant hash map where we ask for a key and we get its value. Memory-based, extremely fast lookups, simple model.
 
-**BEST FOR :**
-caching, sessions, rate-limiting, shopping cart, leader board
-
-**PROS** → simple ops, low latency, high throughput
-**CONS** → no joins, limited querying
+- **BEST FOR:** Caching, sessions, rate-limiting, shopping carts, leaderboards.
+- ✅ **PROS:** Simple operations, extremely low latency, high throughput.
+- ❌ **CONS:** No joins, limited querying capability.
 
 ---
 
-### 4. Wide column database
-*Apache Cassandra, Apache HBase*
+### 4️⃣ Wide Column Database
+*Examples: Apache Cassandra, Apache HBase*
 
-these are optimized for large scale distributed workload
-unlike relational, rows can have different columns
-**massive scalability, distributed by design, handles huge datasets**
+Optimized for large-scale distributed workloads. Unlike relational DBs, rows can have entirely different columns. Massive scalability, distributed by design, handles huge datasets.
 
 | Roll | Name | email | phone |
 | :--- | :--- | :--- | :--- |
-| 006 | Aadz | NULL | 79870... |
-| 012 | Arpit | hehe@gmail.com | NULL |
+| `006` | `Aadz` | `NULL` | `79870...` |
+| `012` | `Arpit` | `hehe@gmail.com` | `NULL` |
 
-**BEST FOR**
-logging, social media activity feed, telecom, IoT
-
-**pros** → excellent horizontal scaling, high throughput, fault tolerant
-**cons** → complex, few relational features
+- **BEST FOR:** Logging, social media activity feeds, telecom, IoT.
+- ✅ **PROS:** Excellent horizontal scaling, high throughput, fault tolerant.
+- ❌ **CONS:** Complex, very few relational features.
 
 ---
 
-### 5. Graph database
-*Neo4j, Amazon neptune*
+### 5️⃣ Graph Database
+*Examples: Neo4j, Amazon Neptune*
 
-Stores nodes and relationships (edges) instead of tables, relationships are stored directly
-**Eg** `A` ----- **Friends** ----- `B`
+Stores nodes and relationships (edges) instead of tables. Relationships are stored directly as first-class citizens.
+**Example:** `A` ━━━━ **Friends** ━━━━ `B`
 
-**BEST FOR**
-knowledge graphs, recommendation systems, fraud detection, network analysis
-
-**PROS**
-efficient relationship traversal, natural representation of connected data
-**CONS**
-not ideal for traditional transactional business application
+- **BEST FOR:** Knowledge graphs, recommendation systems, fraud detection, network analysis.
+- ✅ **PROS:** Efficient relationship traversal, natural representation of connected data.
+- ❌ **CONS:** Not ideal for traditional transactional business applications.
 
 ---
 
-### 6. Time - Series Database
-*influx DB, timescale DB*
+### 6️⃣ Time-Series Database
+*Examples: InfluxDB, TimescaleDB*
 
-stores data ordered by time, Eg Timestamp vs temperature
+Stores data ordered strictly by time (e.g., Timestamp vs Temperature).
 
-**BEST FOR :**
-sensors, IoT, server monitor, metrics collection
-
-**PROS**
-efficient time based queries, data compression
-**CONS**
-specialized for temporal workloads rather than general purpose
+- **BEST FOR:** Sensors, IoT, server monitoring, metrics collection.
+- ✅ **PROS:** Efficient time-based queries, heavy data compression.
+- ❌ **CONS:** Specialized for temporal workloads rather than general purpose.
 
 ---
 
-### 7. Vector database
-*Pinecone, Weaviate*
+### 7️⃣ Vector Database
+*Examples: Pinecone, Weaviate*
 
-instead of storing rows, it stores embedding and enable similarity search
+Instead of storing exact rows, it stores embeddings (high dimensional arrays) and enables similarity search.
 
-**BEST FOR**
-AI chatbots, RAG, recommendation system, semantic search
-
-**PROS**
-semantic retrieval, fast nearest neighbour search
-**CONS**
-not a replacement, used alongside SQL
+- **BEST FOR:** AI chatbots, RAG (Retrieval-Augmented Generation), recommendation systems, semantic search.
+- ✅ **PROS:** Semantic retrieval, extremely fast nearest-neighbor search.
+- ❌ **CONS:** Not a replacement for a main DB; used alongside SQL.
 
 ---
 
-## Practice Questions
+## 📝 Practice Questions
 
-**Q1. Why do different types of databases exist instead of one universal database?**
-A1: Different database types exist because workloads differ significantly. Transaction-heavy systems require strong consistency and relational modeling, while caching, graph traversal, time-based analytics, or AI similarity search each benefit from specialized storage models and query mechanisms.
+<details>
+<summary><b>Q1. Why do different types of databases exist instead of one universal database?</b></summary>
+<br>
+<b>A1:</b> Different database types exist because workloads differ significantly. Transaction-heavy systems require strong consistency and relational modeling, while caching, graph traversal, time-based analytics, or AI similarity search each benefit from specialized storage models and query mechanisms.
+</details>
 
-**Q2. Compare relational and document databases. Give one use case where each is the better choice.**
-A2: A relational database stores structured data in tables with predefined schemas and is ideal for applications such as banking or order processing where ACID transactions and joins are essential. A document database stores flexible JSON-like documents, making it better suited for evolving user profiles, content management systems, or product catalogs.
+<details>
+<summary><b>Q2. Compare relational and document databases. Give one use case where each is the better choice.</b></summary>
+<br>
+<b>A2:</b> A relational database stores structured data in tables with predefined schemas and is ideal for applications such as banking or order processing where ACID transactions and joins are essential. A document database stores flexible JSON-like documents, making it better suited for evolving user profiles, content management systems, or product catalogs.
+</details>
 
-**Q3. A company needs to store millions of user login sessions with very fast retrieval by session ID. Which database type would you recommend and why?**
-A3: A key-value database is the best choice. Login sessions are naturally modeled as session_id → session_data mappings, requiring extremely fast reads and writes without complex relational queries.
+<details>
+<summary><b>Q3. A company needs to store millions of user login sessions with very fast retrieval by session ID. Which database type would you recommend and why?</b></summary>
+<br>
+<b>A3:</b> A key-value database is the best choice. Login sessions are naturally modeled as <code>session_id</code> → <code>session_data</code> mappings, requiring extremely fast reads and writes without complex relational queries.
+</details>
 
-**Q4. Why are graph databases well suited for social networking applications?**
-A4: Graph databases store entities as nodes and relationships as edges, enabling efficient traversal of connected data such as friends, followers, or recommendations without relying on multiple expensive joins.
+<details>
+<summary><b>Q4. Why are graph databases well suited for social networking applications?</b></summary>
+<br>
+<b>A4:</b> Graph databases store entities as nodes and relationships as edges, enabling efficient traversal of connected data such as friends, followers, or recommendations without relying on multiple expensive joins.
+</details>
 
-**Q5. An IoT company records temperature readings from one million sensors every second. Which database type is most appropriate? Explain.**
-A5: A time-series database is most appropriate because the data is timestamped, append-heavy, and commonly queried over time ranges for aggregation, monitoring, and trend analysis.
+<details>
+<summary><b>Q5. An IoT company records temperature readings from one million sensors every second. Which database type is most appropriate? Explain.</b></summary>
+<br>
+<b>A5:</b> A time-series database is most appropriate because the data is timestamped, append-heavy, and commonly queried over time ranges for aggregation, monitoring, and trend analysis.
+</details>
 
-**Q6. What is a vector database, and why has it become important in modern AI applications?**
-A6: A vector database stores high-dimensional embeddings produced by machine learning models and supports efficient similarity search. It is a core component of modern AI systems such as semantic search, recommendation engines, and Retrieval-Augmented Generation (RAG), where finding the most semantically similar data is more important than exact keyword matching.
+<details>
+<summary><b>Q6. What is a vector database, and why has it become important in modern AI applications?</b></summary>
+<br>
+<b>A6:</b> A vector database stores high-dimensional embeddings produced by machine learning models and supports efficient similarity search. It is a core component of modern AI systems such as semantic search, recommendation engines, and Retrieval-Augmented Generation (RAG), where finding the most semantically similar data is more important than exact keyword matching.
+</details>

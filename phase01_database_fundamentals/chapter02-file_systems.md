@@ -1,56 +1,73 @@
-Authored by: Arpit Raj, Lnmiit jaipur 
+<div align="center">
+  <small><i>Authored by: Arpit Raj, LNMIIT Jaipur</i></small>
+  <h1>📂 File Systems in Detail</h1>
+  <h2>Chapter 2</h2>
+</div>
 
-# Ch 2 File Systems in detail
+---
 
-• DBMS is built on top of a file system
-• a file is a collection of bytes stored on secondary storage and managed by OS
+> [!IMPORTANT]
+> - A **DBMS** is built on top of a file system.
+> - A **file** is a collection of bytes stored on secondary storage and managed by the OS.
 
-### File system
-↳ component of OS responsible for organizing and managing files
-• create / delete / rename files
-• read / write bytes
-• manage directories / permissions at file level
+## 🛠️ The File System
+A file system is a component of the OS responsible for organizing and managing files. Its capabilities include:
+- `Create` / `Delete` / `Rename` files
+- `Read` / `Write` bytes
+- Manage directories / permissions at the file level
 
-### Flow
-Application → read() → OS → file system → disk 
+### 🌊 Flow of Data
 
-application itself parses CSV, search and update records validate data, OS does none of this 
+```mermaid
+graph LR
+    A[Application] -->|read| B(OS)
+    B --> C{File System}
+    C --> D[(Disk)]
+```
 
-### Text files
-| PROS | CONS |
+> [!NOTE]
+> The **application itself** must parse CSVs, search, update records, and validate data. The OS does **none** of this.
+
+---
+
+## 📝 Text Files
+
+| ✅ PROS | ❌ CONS |
 | :--- | :--- |
-| • easy debugging<br>• portable<br>• platform independent | • no schema<br>• no indexing<br>• slow process |
+| • Easy debugging<br>• Portable<br>• Platform independent | • No schema<br>• No indexing<br>• Slow process |
 
-### CSV files
-*(Comma separated values)*
+## 📊 CSV Files *(Comma Separated Values)*
 
-| PROS | CONS |
+| ✅ PROS | ❌ CONS |
 | :--- | :--- |
-| • easy import/export<br>• excel supported | • no indexing<br>• no constraint<br>• no relation<br>• no transaction |
+| • Easy import/export<br>• Excel supported | • No indexing<br>• No constraint<br>• No relation<br>• No transaction |
 
-### JSON files
-*(excellent to represent semi structured data)*
+## 📜 JSON Files *(Semi-Structured Data)*
 
-| PROS | CONS |
+| ✅ PROS | ❌ CONS |
 | :--- | :--- |
-| • flexible schema<br>• easy to exchange over API's<br>• supports nested objects | • no transaction<br>• no concurrency<br>• searching needs scanning<br>• large dataset is inefficient |
+| • Flexible schema<br>• Easy to exchange over APIs<br>• Supports nested objects | • No transaction<br>• No concurrency<br>• Searching needs scanning<br>• Large dataset is inefficient |
 
-### File system vs DBMS
+---
 
-| Feature | File system | DBMS |
-| :--- | :--- | :--- |
-| stores bytes | ✔ | ✔ |
-| query language | ✘ | ✔ |
-| indexing | ✘ | ✔ |
-| transaction | ✘ | ✔ |
-| Concurrency control | ✘ | ✔ |
-| recovery | ✘ | ✔ |
-| integrity | ✘ | ✔ |
-| query optimization | ✘ | ✔ |
-| security | ✘ | ✔ |
+## 🥊 File System vs DBMS
 
-### Sequential access vs random access
+| Feature | 📂 File System | 🗄️ DBMS |
+| :--- | :---: | :---: |
+| **Stores bytes** | ✔️ | ✔️ |
+| **Query language** | ❌ | ✔️ |
+| **Indexing** | ❌ | ✔️ |
+| **Transaction** | ❌ | ✔️ |
+| **Concurrency control**| ❌ | ✔️ |
+| **Recovery** | ❌ | ✔️ |
+| **Integrity** | ❌ | ✔️ |
+| **Query optimization** | ❌ | ✔️ |
+| **Security** | ❌ | ✔️ |
 
-| Sequential access | random access |
+---
+
+## ⏱️ Sequential Access vs Random Access
+
+| 🛤️ Sequential Access | 🎯 Random Access |
 | :--- | :--- |
-| • O(n)<br>• looks for data in a sequential manner, i.e checks all the record<br>• good for logs, large sequential reads, streaming etc | • O(1)<br>• Jump directly to required location using index/offset<br>• takes use of B+ trees and hash indices |
+| • **O(n)** time complexity<br>• Looks for data sequentially (checks all records)<br>• Good for logs, large sequential reads, streaming | • **O(1)** time complexity<br>• Jumps directly to required location using an index/offset<br>• Uses **B+ trees** and **hash indices** |

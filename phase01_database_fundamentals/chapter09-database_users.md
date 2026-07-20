@@ -1,26 +1,31 @@
-Authored by: Arpit Raj, Lnmiit jaipur 
+<div align="center">
+  <small><i>Authored by: Arpit Raj, LNMIIT Jaipur</i></small>
+  <h1>👥 Database Users</h1>
+  <h2>Chapter 9</h2>
+</div>
 
-# CH 2: DATABASE USERS 
+---
 
-### I. Database Administrators
-• responsible for installation, configuration, securing, managing, monitoring, optimizing the database system
-• creates database, manage users, grant permissions, storage management, capacity planning, backup and recovery, create indexes (in collab. with devs)
+### 👑 I. Database Administrators (DBA)
+- Responsible for installation, configuration, securing, managing, monitoring, and optimizing the database system.
+- Creates the database, manages users, grants permissions, handles storage management, capacity planning, backup and recovery.
+- Creates indexes (in collaboration with developers).
 
-### II. Database designers
-• designs logical structure of database before the developement begins
-• they decide tables, attributes, relations, keys, choose normalization, ER diagrams, schema design, define relationships and constraints
+### 📐 II. Database Designers
+- Designs the logical structure of the database before development begins.
+- They decide the tables, attributes, relations, keys, choose normalization, create ER diagrams, handle schema design, and define relationships and constraints.
 
-### III. App developers
-• build software that interact with databases
-• write SQL queries, develop backend APIs, implement CRUD, use ORM, query optimization, handle transactions, integrate database with application
-*usually use:* `JAVA` `node.js` `django` `flask` `springboot` `.NET`
+### 💻 III. App Developers
+- Build software that interacts with databases.
+- Write SQL queries, develop backend APIs, implement CRUD, use ORMs, handle query optimization, handle transactions, and integrate the database with the application.
+- **Usually use:** `JAVA`, `node.js`, `django`, `flask`, `springboot`, `.NET`
 
-### IV. Power users
-• interact directly with database
-• execute complex queries, create reports, perform data analyses
-*Eg: Finance manager analyzing revenue*
+### ⚡ IV. Power Users
+- Interact directly with the database.
+- Execute complex queries, create reports, and perform data analyses.
+- **Example:** *A Finance manager analyzing revenue.*
 
-### V. Data Analyst
-• extract insight from data to support business decision making
-• SQL queries, reports, dashboards, trend analyses, data visualization
-*uses tools like:* `SQL` `power BI` `tableau` `R` `python`
+### 📊 V. Data Analyst
+- Extract insights from data to support business decision-making.
+- Handle SQL queries, reports, dashboards, trend analyses, and data visualization.
+- **Uses tools like:** `SQL`, `Power BI`, `Tableau`, `R`, `Python`

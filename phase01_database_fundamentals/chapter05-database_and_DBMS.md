@@ -1,161 +1,178 @@
-AUTHORED BY : ARPIT RAJ , LNMIIT JAIPUR
-
-# Ch 5 Database and DBMS
-
-## Database
-
-**Database:** an organized, logically related collection of data designed to support storage, retrieval, modification and management of info for one or more application
-
-**ORGANIZED , LOGICALLY RELATED , PERSISTENT , SHARED , MANAGED**
-
-> **database :- user data + metadata**
-> ↪ supports storage, retrieval, modification, management of info
-
-### Characteristic of database
-• **integrated :** different piece of info interconnected
-• **consistent :** stored data obey rules
-• **persistent :** data survives even after termination
-• **shared :** concurrent access
-• **secure :** Authorization
-• **scalable :** doesnt matter how much data volume increased
-• **minimal redundancy :** via good schema design
+<div align="center">
+  <small><i>Authored by: Arpit Raj, LNMIIT Jaipur</i></small>
+  <h1>🗄️ Database & DBMS Overview</h1>
+  <h2>Chapter 5</h2>
+</div>
 
 ---
 
-## DBMS Overview
+## 📦 What is a Database?
 
-**a database is simply data, it does not**
-• execute SQL
-• optimize queries
-• handle transaction
-• manage locks
-• recover crash
+> [!NOTE]
+> **Database:** An organized, logically related collection of data designed to support storage, retrieval, modification, and management of info for one or more applications.
 
-**} responsibilities of DBMS**
+**ORGANIZED • LOGICALLY RELATED • PERSISTENT • SHARED • MANAGED**
 
-| database | DBMS |
+### ✨ Characteristics of a Database
+- 🔗 **Integrated:** Different pieces of info are interconnected.
+- 📏 **Consistent:** Stored data obeys rules.
+- 💾 **Persistent:** Data survives even after termination.
+- 🔄 **Shared:** Allows concurrent access.
+- 🛡️ **Secure:** Proper authorization is maintained.
+- 📈 **Scalable:** Doesn't matter how much data volume increases.
+- ✂️ **Minimal Redundancy:** Achieved via good schema design.
+
+---
+
+## 🧠 DBMS Overview
+
+A database is simply **data**. On its own, it does **not**:
+- ❌ Execute SQL
+- ❌ Optimize queries
+- ❌ Handle transactions
+- ❌ Manage locks
+- ❌ Recover from crashes
+
+**All of these are the responsibilities of the DBMS!**
+
+| 📦 Database | 🗄️ DBMS |
 | :--- | :--- |
-| collection of related data | software that manages database |
-| passive | active |
-| stores info | performs operation on info |
-| contain user data | provides querying, transaction, security and recovery |
+| Collection of related data | Software that manages the database |
+| Passive | Active |
+| Stores info | Performs operations on info |
+| Contains user data | Provides querying, transaction, security, and recovery |
 
-**DBMS:**
-a software that provides an interface b/w applications and databases, enables efficient storage, retrieval, modification, security, transaction process, concurrency, and recovery
+> [!TIP]
+> **DBMS:** A software that provides an interface between applications and databases. It enables efficient storage, retrieval, modification, security, transaction processing, concurrency, and recovery.
 
-App → SQL queries → **DBMS** → *abstraction layer* → OS → (SSD / HDD)
+```mermaid
+graph LR
+    A[App] -->|SQL Queries| B(DBMS)
+    B -->|Abstraction Layer| C{OS}
+    C --> D[(SSD / HDD)]
+```
 
 ---
 
-## Responsibilities of DBMS
-*(We will discuss in detail in later chapters)*
+## 🛠️ Responsibilities of a DBMS
 
-**(A) data storage**
-• organize records
-• manage pages
-• allocate storage
-• free unused space
+**(A) Data Storage**
+• Organize records • Manage pages • Allocate storage • Free unused space
 
-**(B) Query process**
-• parse SQL
-• validate syntax
-• check schema
-• create execution plan
-• execute query
+**(B) Query Processing**
+• Parse SQL • Validate syntax • Check schema • Create execution plan • Execute query
 
 **(C) Query Optimization**
-• estimate cost of each execution plan and execute the one with lower cost
+• Estimate cost of each execution plan and execute the one with the lowest cost
 
-**(D) Transaction management**
-• guarantees ACID properties
+**(D) Transaction Management**
+• Guarantees ACID properties
 
-**(E) Concurrency control**
-• prevents lost updates
-• prevents dirty reads
-• prevent phantom reads
+**(E) Concurrency Control**
+• Prevents lost updates • Prevents dirty reads • Prevents phantom reads
 
-**(F) recovery management**
-• write ahead logging (WAL)
-• checkpoints
-• recovery algorithms
+**(F) Recovery Management**
+• Write Ahead Logging (WAL) • Checkpoints • Recovery algorithms
 
-**(G) security management**
-• authentication
-• authorization
+**(G) Security Management**
+• Authentication • Authorization
 
-**(H) integrity enforcement**
-• constraint satisfaction
-• unique primary key
-• foreign key reference valid row
+**(H) Integrity Enforcement**
+• Constraint satisfaction • Unique primary key • Foreign key reference valid row
 
 ---
 
-## DBMS Architecture Modules
+## 🏗️ DBMS Architecture Modules
 
-**DBMS is not one large program , but a collection of multiple specialized modules**
+**A DBMS is not one large program, but a collection of multiple specialized modules.**
 
-| Module | Mapped Responsibility Point |
+| Module | Mapped Responsibility |
 | :--- | :--- |
-| Query processor | (B, C) points |
-| Storage manager | (A) |
-| Transaction manager | (D) |
-| Buffer manager | - |
-| recovery manager | (F) |
-| Authorization manager | (G) |
+| **Query Processor** | (B, C) Query Processing & Optimization |
+| **Storage Manager** | (A) Data Storage |
+| **Transaction Manager** | (D) Transaction Management |
+| **Buffer Manager** | - |
+| **Recovery Manager** | (F) Recovery Management |
+| **Authorization Manager**| (G) Security Management |
 
-### Buffer manager
-↪ accessing disk is slow, so DBMS keeps frequently accessed pages in memory
-
+### 🗃️ Buffer Manager
+Accessing a disk is slow, so the DBMS keeps frequently accessed pages in memory.
 **It decides:**
-• which pages to load
-• which to evict
-• when modified pages should be written back
+- 📥 Which pages to load
+- 📤 Which to evict
+- ✍️ When modified pages should be written back
 
-> whenever SQL is executed, DBMS consults the system catalogue where the metadata is stored
+> [!IMPORTANT]
+> Whenever SQL is executed, the DBMS consults the **System Catalogue** where the metadata is stored.
 
-### Life of A SQL query
-receive SQL → Parse → validate → optimize → choose execution plan → request pages → read disk → return results
+### 🛤️ Life of a SQL Query
+
+```mermaid
+graph LR
+    A[Receive SQL] --> B[Parse]
+    B --> C[Validate]
+    C --> D[Optimize]
+    D --> E[Choose Plan]
+    E --> F[Request Pages]
+    F --> G[Read Disk]
+    G --> H[Return Results]
+```
 
 ---
 
-## Practice Questions
+## 📝 Practice Questions
 
-**Q1: Why is a DBMS considered an abstraction layer between applications and storage?**
-A1: A DBMS abstracts the complexity of physical storage by exposing a logical interface (SQL and schemas) to applications. Applications interact with tables and queries rather than files, pages, or disk blocks. The DBMS translates high-level operations into low-level storage operations, providing data independence.
+<details>
+<summary><b>Q1: Why is a DBMS considered an abstraction layer between applications and storage?</b></summary>
+<br>
+<b>A1:</b> A DBMS abstracts the complexity of physical storage by exposing a logical interface (SQL and schemas) to applications. Applications interact with tables and queries rather than files, pages, or disk blocks. The DBMS translates high-level operations into low-level storage operations, providing data independence.
+</details>
 
-**Q2: Differentiate between a database and a DBMS with examples.**
-A2: A database is the persistent collection of related user data and metadata (e.g., CollegeDB containing Students and Courses tables). A DBMS is the software (e.g., MySQL or PostgreSQL) that manages the database by executing queries, enforcing constraints, handling transactions, controlling concurrency, and recovering from failures.
+<details>
+<summary><b>Q2: Differentiate between a database and a DBMS with examples.</b></summary>
+<br>
+<b>A2:</b> A database is the persistent collection of related user data and metadata (e.g., CollegeDB containing Students and Courses tables). A DBMS is the software (e.g., MySQL or PostgreSQL) that manages the database by executing queries, enforcing constraints, handling transactions, controlling concurrency, and recovering from failures.
+</details>
 
-**Q3: List the primary responsibilities of a DBMS.**
-A3: The primary responsibilities of a DBMS include:
-• Data storage management
-• Query processing
-• Query optimization
-• Transaction management
-• Concurrency control
-• Recovery management
-• Security and authorization
-• Integrity constraint enforcement
-• Metadata management
+<details>
+<summary><b>Q3: List the primary responsibilities of a DBMS.</b></summary>
+<br>
+<b>A3:</b> The primary responsibilities of a DBMS include: Data storage management, Query processing, Query optimization, Transaction management, Concurrency control, Recovery management, Security and authorization, Integrity constraint enforcement, and Metadata management.
+</details>
 
-**Q4: What is the role of the Query Processor?**
-A4: The Query Processor parses SQL statements, validates their syntax and semantics, consults the system catalog, generates a logical execution plan, optimizes that plan, and coordinates its execution to produce the requested results.
+<details>
+<summary><b>Q4: What is the role of the Query Processor?</b></summary>
+<br>
+<b>A4:</b> The Query Processor parses SQL statements, validates their syntax and semantics, consults the system catalog, generates a logical execution plan, optimizes that plan, and coordinates its execution to produce the requested results.
+</details>
 
-**Q5: Why is a Buffer Manager necessary?**
-A5: Disk access is several orders of magnitude slower than RAM access. The Buffer Manager caches frequently used disk pages in memory, reducing disk I/O and improving query performance. It also decides when modified pages should be flushed back to disk.
+<details>
+<summary><b>Q5: Why is a Buffer Manager necessary?</b></summary>
+<br>
+<b>A5:</b> Disk access is several orders of magnitude slower than RAM access. The Buffer Manager caches frequently used disk pages in memory, reducing disk I/O and improving query performance. It also decides when modified pages should be flushed back to disk.
+</details>
 
-**Q6: Explain the purpose of the Transaction Manager and the Recovery Manager.**
-A6: The Transaction Manager ensures that groups of operations satisfy the ACID properties by coordinating commits and rollbacks. The Recovery Manager restores the database to a consistent state after failures using logs and recovery algorithms, ensuring durability and consistency.
+<details>
+<summary><b>Q6: Explain the purpose of the Transaction Manager and the Recovery Manager.</b></summary>
+<br>
+<b>A6:</b> The Transaction Manager ensures that groups of operations satisfy the ACID properties by coordinating commits and rollbacks. The Recovery Manager restores the database to a consistent state after failures using logs and recovery algorithms, ensuring durability and consistency.
+</details>
 
-**Q7: What information is stored in the System Catalog (Data Dictionary)?**
-A7: The System Catalog stores metadata, including schemas, table definitions, column definitions, data types, indexes, constraints, views, user accounts, privileges, and optimizer statistics. The DBMS relies on this information to interpret and execute queries correctly.
+<details>
+<summary><b>Q7: What information is stored in the System Catalog (Data Dictionary)?</b></summary>
+<br>
+<b>A7:</b> The System Catalog stores metadata, including schemas, table definitions, column definitions, data types, indexes, constraints, views, user accounts, privileges, and optimizer statistics. The DBMS relies on this information to interpret and execute queries correctly.
+</details>
 
-**Q8: Describe the journey of a SQL query from the moment it is submitted until the results are returned.**
-A8: A SQL query passes through several stages:
-1. The DBMS receives the SQL statement.
-2. The Query Processor parses and validates it.
-3. The Optimizer generates and evaluates execution plans.
-4. The chosen plan is executed.
-5. The Storage and Buffer Managers retrieve the necessary data pages.
-6. The DBMS applies constraints and transaction rules as needed.
+<details>
+<summary><b>Q8: Describe the journey of a SQL query from the moment it is submitted until the results are returned.</b></summary>
+<br>
+<b>A8:</b> A SQL query passes through several stages:<br>
+1. The DBMS receives the SQL statement.<br>
+2. The Query Processor parses and validates it.<br>
+3. The Optimizer generates and evaluates execution plans.<br>
+4. The chosen plan is executed.<br>
+5. The Storage and Buffer Managers retrieve the necessary data pages.<br>
+6. The DBMS applies constraints and transaction rules as needed.<br>
 7. The requested results are returned to the application.
+</details>
