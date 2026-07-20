@@ -1,14 +1,15 @@
 <div align="center">
-  <small><i>Authored by: Arpit Raj, LNMIIT Jaipur</i></small>
-  <h1>📝 Chapter: Advanced SQL Queries and Techniques (Set 8)</h1>
+  <small><i>Authored by: Arpit Raj, Lnmiit jaipur</i></small>
+  <h1>📝 SQL Notes & Problem Solutions (Set 8)</h1>
   <h2>Chapter 102</h2>
 </div>
 
 ---
 
-## Task Submissions by Day
+## 1. Task Submissions by Day
 
 **Table: Tasks**
+
 | Column | Type |
 | :--- | :--- |
 | `task_id` | int |
@@ -40,6 +41,7 @@ FROM Tasks;
 
 **Why DAYOFWEEK()?**
 MySQL returns:
+
 | Day | Value |
 | :--- | :--- |
 | Sunday | 1 |
@@ -50,13 +52,14 @@ MySQL returns:
 | Friday | 6 |
 | Saturday | 7 |
 
-So `DAYOFWEEK(submit_date) IN (1,7)` means Sunday OR Saturday.
+So `DAYOFWEEK(submit_date) IN (1,7)` means Sunday OR Saturday
 
 ---
 
-## Consecutive Year Orders
+## 2. Consecutive Year Orders
 
 **Table: Orders**
+
 | Column | Type |
 | :--- | :--- |
 | `order_id` | int |
@@ -99,7 +102,7 @@ AND o2.orders >= 3;
 
 ---
 
-## Form a Chemical Bond
+## 3. Form a Chemical Bond
 
 **Tables**
 
@@ -108,6 +111,12 @@ AND o2.orders >= 3;
 | :--- | :--- |
 | `symbol` | varchar |
 | `type` | enum('Metal','Nonmetal') |
+
+**Compounds**
+| Column | Type |
+| :--- | :--- |
+| `metal` | varchar |
+| `nonmetal` | varchar |
 
 Return all possible compounds by pairing every Metal with every Nonmetal.
 
@@ -124,12 +133,52 @@ AND e2.type = 'Nonmetal';
 ```
 
 **Explanation:**
-1. `FROM Elements e1 CROSS JOIN Elements e2`
-Every row combines with every other row. This is called the Cartesian Product.
-2. `WHERE e1.type='Metal' AND e2.type='Nonmetal'`
-Keep only valid Metal-Nonmetal pairings.
+Suppose Elements:
+| symbol | type |
+| :--- | :--- |
+| Na | Metal |
+| K | Metal |
+| Cl | Nonmetal |
+| Br | Nonmetal |
+
+**Step 1:** `FROM Elements e1 CROSS JOIN Elements e2`
+Every row combines with every other row.
+
+**Result:**
+| e1 | e2 |
+| :--- | :--- |
+| Na | Na |
+| Na | K |
+| Na | Cl |
+| Na | Br |
+| K | Na |
+| K | K |
+| K | Cl |
+| K | Br |
+| Cl | Na |
+| ... | ... |
+
+This is called the Cartesian Product.
+If there are:
+- 2 metals
+- 3 nonmetals
+You'll get 2 × 3 = 6 possible compounds.
+
+**Step 2:**
+Keep only: `WHERE e1.type='Metal' AND e2.type='Nonmetal'`
+
+**Remaining rows:**
+| metal | nonmetal |
+| :--- | :--- |
+| Na | Cl |
+| Na | Br |
+| K | Cl |
+| K | Br |
+
+Exactly the answer.
 
 ### Approach 2 — JOIN
+
 CROSS JOIN is equivalent to a JOIN with a condition that is always true.
 
 ```sql
@@ -145,9 +194,10 @@ AND e2.type = 'Nonmetal';
 
 ---
 
-## Latest Employee Salary
+## 4. Latest Employee Salary
 
 **Table: Salary**
+
 | Column | Type |
 | :--- | :--- |
 | `emp_id` | int |
@@ -157,7 +207,8 @@ AND e2.type = 'Nonmetal';
 | `department_id` | int |
 | `salary_date` | date |
 
-Each employee may have multiple salary records. Return the latest salary of every employee.
+Each employee may have multiple salary records.
+Return the latest salary of every employee.
 
 ### Approach 1 — JOIN + MAX() (Best)
 
@@ -191,50 +242,261 @@ WHERE salary_date =
 
 ---
 
-## Popularity Percentage
+## 5. Popularity Percentage
 
 Suppose the table is:
 | user1 | user2 |
 | :--- | :--- |
-| `1` | `2` |
-| `1` | `3` |
-| `2` | `3` |
+| 1 | 2 |
+| 1 | 3 |
+| 2 | 3 |
 
-Each row means `user1 ↔ user2`. Friendship is bidirectional.
-So `1 2` means `1 is friend of 2` and `2 is friend of 1`.
+Each row means `user1 ↔ user2`.
+Friendship is bidirectional.
+So `1 2` means:
+- 1 is friend of 2
+- 2 is friend of 1
+
+Draw the graph:
+```text
+  1
+ / \
+2---3
+```
+
+Now count friends.
+- User 1: Friends = {2,3}, Count = 2
+- User 2: Friends = {1,3}, Count = 2
+- User 3: Friends = {1,2}, Count = 2
 
 **Now compute Popularity Percentage:**
-`Popularity Percentage = (Number of Friends) / (Total Users - 1) * 100`
+`Popularity Percentage = (Number of Friends) / (Total Users − 1) × 100`
 
-### Solution
+There are 3 users. So denominator is 3 − 1 = 2
+Hence:
+- User1: 2 / 2 × 100 = 100%
+- User2: 100%
+- User3: 100%
+
+**Why Total Users − 1 ?**
+A user cannot be friends with himself.
+If there are 5 users, Maximum possible friends = 4.
+Hence `Total Users − 1`.
+
+### Now let's solve it.
+
+**Step 1:** `SELECT user_id,`
+We want one output row per user.
+
+**Step 2:**
+```sql
+FROM
+(
+ SELECT user1 AS user_id
+ FROM Friends
+ UNION ALL
+ SELECT user2
+ FROM Friends
+) t
+```
+**Why?**
+Original table:
+| user1 | user2 |
+| :--- | :--- |
+| 1 | 2 |
+| 1 | 3 |
+| 2 | 3 |
+
+Notice: Every friendship contains two users. We want to count friendships for each user.
+So we split every friendship into two rows.
+
+First query `SELECT user1` gives:
+| user1 |
+| :--- |
+| 1 |
+| 1 |
+| 2 |
+
+Second query `SELECT user2` gives:
+| user2 |
+| :--- |
+| 2 |
+| 3 |
+| 3 |
+
+Now `UNION ALL` combines them.
+Result:
+| user1 |
+| :--- |
+| 1 |
+| 1 |
+| 2 |
+| 2 |
+| 3 |
+| 3 |
+
+Now every friendship contributes one count to each user.
+
+**Why UNION ALL?**
+Suppose 1 has 10 friends. Then `1 1 1 1 ...` must appear 10 times.
+If we use `UNION`, duplicates disappear. Then 1 appears only once. Friend count becomes wrong. Hence `UNION ALL`.
+
+**Step 3:** `GROUP BY user_id`
+Now MySQL creates one group for every user.
+- User1: 1, 1
+- User2: 2, 2
+- User3: 3, 3
+
+**Step 4:** `COUNT(*)`
+Counts rows in every group.
+Result:
+| user | friends |
+| :--- | :--- |
+| 1 | 2 |
+| 2 | 2 |
+| 3 | 2 |
+
+Exactly the number of friends.
+
+**Step 5:** Now denominator.
+`SELECT COUNT(DISTINCT user_id)`
+Need total number of users. Again Users are stored in two columns. So combine them.
+
+```sql
+SELECT user1 AS user_id FROM Friends
+UNION
+SELECT user2 FROM Friends
+```
+
+Notice: This time we use `UNION` NOT `UNION ALL` because we only want unique users.
+Result:
+| user |
+| :--- |
+| 1 |
+| 2 |
+| 3 |
+
+Now `COUNT(DISTINCT user_id)` returns 3.
+Subtract `-1` because a user cannot be friend with himself.
+Denominator = 2.
+
+**Step 6:**
+Formula: `COUNT(*) * 100 / (total users - 1)`
+Example: User1 `2 × 100 / 2 = 100`
+
+**Step 7:**
+`ROUND(..., 2)` Rounds answer to 2 decimal places.
+
+### Final Query (Annotated)
 
 ```sql
 SELECT
- user_id, 
+ user_id, -- Output one row per user
  ROUND(
- COUNT(*) * 100 / 
+ COUNT(*) * 100 / -- Number of friends × 100
  (
- SELECT COUNT(DISTINCT user_id) 
+ (
+ SELECT COUNT(DISTINCT user_id) -- Count unique users
  FROM
  (
- SELECT user1 AS user_id FROM Friends
- UNION 
- SELECT user2 FROM Friends
+ SELECT user1 AS user_id
+ FROM Friends
+ UNION -- Remove duplicate users
+ SELECT user2
+ FROM Friends
  ) t
- ) - 1 
+ ) - 1 -- Exclude the user himself
  ),
- 2 
+ 2 -- Round to 2 decimal places
  ) AS percentage_popularity
 FROM
 (
- SELECT user1 AS user_id FROM Friends
- UNION ALL 
- SELECT user2 FROM Friends
+ SELECT user1 AS user_id -- First endpoint of friendship
+ FROM Friends
+ UNION ALL -- Keep every friendship
+ SELECT user2 -- Second endpoint
+ FROM Friends
 ) t
 GROUP BY user_id;
 ```
 
-**Why UNION ALL?**
-Notice: Every friendship contains two users. We want to count friendships for each user. So we split every friendship into two rows.
-If we use `UNION`, duplicates disappear. Then a friend count becomes wrong. Hence `UNION ALL`.
-But for the Total Users calculation, we ONLY want unique users, so we use `UNION` instead of `UNION ALL`.
+---
+
+## 6. Count Occurrences in Text
+
+**Table: Files**
+
+| Column | Type |
+| :--- | :--- |
+| `file_name` | varchar |
+| `content` | text |
+
+We need to count how many times the words:
+- bull
+- bear
+appear in all files. The match is case-insensitive.
+
+### Approach 1 — REGEXP_REPLACE() (Best)
+
+```sql
+SELECT
+ SUM(
+ (
+ LENGTH(LOWER(content))
+ - LENGTH(REGEXP_REPLACE(LOWER(content), 'bull', ''))
+ ) / 4
+ ) AS bull_count,
+ SUM(
+ (
+ LENGTH(LOWER(content))
+ - LENGTH(REGEXP_REPLACE(LOWER(content), 'bear', ''))
+ ) / 4
+ ) AS bear_count
+FROM Files;
+```
+
+**Explanation:**
+Suppose `content` : `Bull bull Bear`
+
+Convert to lowercase: `bull bull bear`
+Remove "bull": `bear`
+
+Original length = 14
+New length = 6
+Difference = 8
+
+Since `bull` has 4 letters
+Occurrences = 8 / 4 = 2
+
+---
+
+## 7. Find Peak Calling Hours for Each City
+
+**Table: Calls**
+
+| Column | Type |
+| :--- | :--- |
+| `caller_id` | int |
+| `recipient_id` | int |
+| `call_time` | datetime |
+| `city` | varchar |
+
+Return the hour(s) in which each city had the maximum number of calls. If multiple hours have the same maximum count, return all of them.
+
+The simplest non-window solution is a correlated subquery:
+
+```sql
+SELECT
+ city,
+ HOUR(call_time) AS peak_calling_hour,
+ COUNT(*) AS number_of_calls
+FROM Calls
+GROUP BY city, HOUR(call_time)
+HAVING COUNT(*) >= ALL
+(
+ SELECT COUNT(*)
+ FROM Calls c2
+ WHERE c2.city = Calls.city
+ GROUP BY HOUR(c2.call_time)
+);
+```
